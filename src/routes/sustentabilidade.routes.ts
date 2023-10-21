@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { SustentabilidadeController } from "../controller/sustentabilidadeController";
+import { SustentabilidadeController } from "../controller/SustentabilidadeController";
 
 export const sustentabilidadesRoutes = async (app: FastifyInstance) => {
     const sustentabilidadeController = new SustentabilidadeController()

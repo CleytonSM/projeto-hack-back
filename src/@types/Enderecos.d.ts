@@ -5,4 +5,5 @@ export interface EnderecosProps {
     estado: string,
     numero: string,
     rua: string,
+    id_ponto_cultural: string
 }
