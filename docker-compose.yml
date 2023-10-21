@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db: 
+    image: mysql
+    restart: always
+    ports:
+      - 3316:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: '123'
+      MYSQL_DATABASE: 'HACKATHON'
+      MYSQL_USER: 'this_user'
+      MYSQL_PASSWORD: '123'
+    volumes: 
+      - ./data:/var/lib/mysql
