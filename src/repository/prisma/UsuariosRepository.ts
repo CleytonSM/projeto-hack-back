@@ -1,18 +1,20 @@
 import {Prisma, Usuarios } from '@prisma/client';
 import { prisma } from '../../lib/prisma';
 import { UsuariosRepository } from '../interfaces/usuarios-interface';
+import { hash } from 'bcrypt';
 
 export class PrismaUsuariosRepository implements UsuariosRepository {
     async create(data: Prisma.UsuariosCreateInput): Promise<Usuarios|null> {
         try {
+            const hashPassword = await hash(data.senha, 5)
             const usuario = await prisma.usuarios.create({
-                data: {
-                    nome: data.nome,
-                    sobrenome: data.sobrenome,
-                    telefone: data.telefone,
-                    email: data.email,
-                    senha: data.senha
-                }
+               data: {
+                nome: data.nome,
+                sobrenome: data.sobrenome,
+                telefone: data.telefone,
+                email: data.email,
+                senha: hashPassword
+               }
             })
             return usuario
         } catch (error) {
