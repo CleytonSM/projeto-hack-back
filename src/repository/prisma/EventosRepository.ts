@@ -16,6 +16,7 @@ export class PrismaEventosRepository implements EventosRepository {
     async searchEvento(): Promise<Eventos[] | null> {
         try {
             const eventos = await prisma.eventos.findMany()
+            
             return eventos
         } catch {
             return null
