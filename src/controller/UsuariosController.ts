@@ -4,8 +4,6 @@ import { UsuariosService } from "../services/UsuariosService";
 import { makeUsuariosService } from "../factory/makeUsuariosService";
 import { AppError } from "../error/AppError";
 
-
-
 export class UsuariosController {
     async createUsuarioHandler(req: FastifyRequest, rep: FastifyReply) {
         const usuarioSchema = z.object({

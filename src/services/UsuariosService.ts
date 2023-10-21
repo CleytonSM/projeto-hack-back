@@ -1,10 +1,7 @@
 import { CreateUsuariosProps, UsuariosProps } from "../@types/Usuarios";
 import { AppError } from "../error/AppError";
 import { UsuariosRepository } from "../repository/interfaces/usuarios-interface";
-
 import {Prisma, Usuarios} from "@prisma/client"
-
-
 
 export class UsuariosService {
     constructor(private usuariosRepository: UsuariosRepository) { }
