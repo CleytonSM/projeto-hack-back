@@ -3,9 +3,6 @@ import { EnderecosRepository } from "../repository/interfaces/enderecos-interfac
 import { AppError } from "../error/AppError";
 import { EnderecosProps } from "../@types/Enderecos";
 
-
-
-
 export class EnderecosService {
     constructor (private enderecoRepository: EnderecosRepository) {}
 
