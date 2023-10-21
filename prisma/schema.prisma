@@ -36,4 +36,56 @@ model Instituicoes {
   email              String             @unique
   senha              String
   status             Int                @default(1)
+  Eventos            Eventos[]
+}
+
+model Enderecos {
+  id     String @id @default(uuid())
+  rua    String
+  numero String
+  bairro String
+  cidade String
+  estado String
+  cep    String
+  status Int    @default(1)
+
+  id_ponto_cultural String?
+  id_evento         String?
+
+  PontosCulturais PontosCulturais[]
+  Eventos         Eventos[]
+}
+
+model PontosCulturais {
+  id          String @id @default(uuid())
+  nome        String
+  importancia String
+  referencia  String
+  hora_inicio String
+  hora_fim    String
+  imagem      String
+  status      Int    @default(1)
+
+  id_endereco String
+
+  Endereco Enderecos @relation(fields: [id_endereco], references: [id])
+}
+
+model Eventos {
+  id              String @id @default(uuid())
+  nome            String
+  descricao       String
+  como_participar String
+  data            String
+  hora_inicio     String
+  hora_fim        String
+  imagem          String
+  ingresso_social String
+  status          Int    @default(1)
+
+  id_endereco    String
+  id_instituicao String
+
+  Instituicao Instituicoes @relation(fields: [id_instituicao], references: [id])
+  Endereco    Enderecos    @relation(fields: [id_endereco], references: [id])
 }

@@ -15,4 +15,8 @@ export const instituicoesRoutes = async (app: FastifyInstance) => {
     app.get('/get-all', async (req, rep) => {
         await instituicoesController.getAllInstituicoesHandler(req, rep)
     })
+
+    app.put('/put/:id', async (req, rep) => {
+        await instituicoesController.putInstituicaoByIdHandler(req, rep)
+    })
 }
