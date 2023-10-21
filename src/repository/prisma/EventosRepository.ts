@@ -12,4 +12,13 @@ export class PrismaEventosRepository implements EventosRepository {
             return null
         }
     }
+
+    async searchEvento(): Promise<Eventos[] | null> {
+        try {
+            const eventos = await prisma.eventos.findMany()
+            return eventos
+        } catch {
+            return null
+        }
+    }
 }
