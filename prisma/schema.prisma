@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuarios {
+  id        String @id @default(uuid())
+  nome      String
+  sobrenome String
+  telefone  String
+  email     String @unique
+  senha     String
+  status    Int    @default(1)
+}
+
+enum perfil_empresarial {
+  instituicao_publica
+  eco_friendly
+  inclusao_social
+  restauracao_ambiental
+}
+
+model Instituicoes {
+  id                 String             @id @default(uuid())
+  razao_social       String
+  descricao          String
+  imagem             String
+  perfil_empresarial perfil_empresarial
+  email              String             @unique
+  senha              String
+  status             Int                @default(1)
+}
