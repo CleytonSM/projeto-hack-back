@@ -37,6 +37,8 @@ CREATE TABLE `Enderecos` (
     `estado` VARCHAR(191) NOT NULL,
     `cep` VARCHAR(191) NOT NULL,
     `status` INTEGER NOT NULL DEFAULT 1,
+    `id_ponto_cultural` VARCHAR(191) NULL,
+    `id_evento` VARCHAR(191) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -52,7 +54,6 @@ CREATE TABLE `PontosCulturais` (
     `hora_fim` VARCHAR(191) NOT NULL,
     `imagem` VARCHAR(191) NOT NULL,
     `status` INTEGER NOT NULL DEFAULT 1,
-    `id_endereco` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -69,7 +70,6 @@ CREATE TABLE `Eventos` (
     `imagem` VARCHAR(191) NOT NULL,
     `ingresso_social` VARCHAR(191) NOT NULL,
     `status` INTEGER NOT NULL DEFAULT 1,
-    `id_endereco` VARCHAR(191) NOT NULL,
     `id_instituicao` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -110,13 +110,13 @@ CREATE TABLE `pontos_acessibilidade` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `PontosCulturais` ADD CONSTRAINT `PontosCulturais_id_endereco_fkey` FOREIGN KEY (`id_endereco`) REFERENCES `Enderecos`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Enderecos` ADD CONSTRAINT `Enderecos_id_ponto_cultural_fkey` FOREIGN KEY (`id_ponto_cultural`) REFERENCES `PontosCulturais`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Enderecos` ADD CONSTRAINT `Enderecos_id_evento_fkey` FOREIGN KEY (`id_evento`) REFERENCES `Eventos`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Eventos` ADD CONSTRAINT `Eventos_id_instituicao_fkey` FOREIGN KEY (`id_instituicao`) REFERENCES `Instituicoes`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Eventos` ADD CONSTRAINT `Eventos_id_endereco_fkey` FOREIGN KEY (`id_endereco`) REFERENCES `Enderecos`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `sustentabilidadeXevento` ADD CONSTRAINT `sustentabilidadeXevento_id_sustentabilidade_fkey` FOREIGN KEY (`id_sustentabilidade`) REFERENCES `pontos_sustentabilidade`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

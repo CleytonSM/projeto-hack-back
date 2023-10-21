@@ -9,5 +9,7 @@ export const pontosCulturaisRoutes = async (app: FastifyInstance) => {
     app.post('/create', async (req, rep) => {
         await pontosCulturaisController.createPontoCulturalHandler(req, rep)
     })
-    
+    app.get('/get/:id', async (req, rep) => {
+        await pontosCulturaisController.getByIdHandler(req, rep)
+    })
 }
