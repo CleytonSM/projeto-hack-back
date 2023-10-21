@@ -12,4 +12,5 @@ export interface UsuariosProps {
     telefone: string;
     email: string;
     senha: string;
+    status: number
 }

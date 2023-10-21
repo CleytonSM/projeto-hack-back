@@ -2,7 +2,7 @@ import { CreateUsuariosProps, UsuariosProps } from "../@types/Usuarios";
 import { AppError } from "../error/AppError";
 import { UsuariosRepository } from "../repository/interfaces/usuarios-interface";
 
-import {Usuarios} from "@prisma/client"
+import {Prisma, Usuarios} from "@prisma/client"
 
 
 
@@ -33,7 +33,7 @@ export class UsuariosService {
         return usuarios
     }
 
-    async putById(id: string , data: UsuariosProps): Promise<Usuarios | null> {
+    async putById(id: string , data: Prisma.UsuariosUpdateInput): Promise<Usuarios | null> {
         const usuario = await this.usuariosRepository.putById(id, data)
         if(!usuario) {
             throw new AppError('Erro ao atualizar usuário')
