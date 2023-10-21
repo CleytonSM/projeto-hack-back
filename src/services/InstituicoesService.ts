@@ -35,4 +35,14 @@ export class InstituicoesService {
 
         return instituicoes
     }
+
+    async putInstituicaoById(id: string, data: Prisma.InstituicoesUpdateInput): Promise<Instituicoes | null> {
+        const instituicao = await this.instituicoesRepository.putInstituicoesById(id, data)
+
+        if (!instituicao) {
+            throw new AppError('Erro ao atualizar instituição.')
+        }
+
+        return instituicao
+    }
 }

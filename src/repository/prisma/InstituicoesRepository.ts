@@ -44,7 +44,7 @@ export class PrismaInstituicoesRepository implements InstituicoesRepository {
         }
     }
 
-    async putUsuarioById(id: string, data: Prisma.InstituicoesUpdateInput): Promise<Instituicoes | null> {
+    async putInstituicoesById(id: string, data: Prisma.InstituicoesUpdateInput): Promise<Instituicoes | null> {
         try {
             const instituicao = await prisma.instituicoes.update({
                 where: {
