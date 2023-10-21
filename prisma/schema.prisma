@@ -57,14 +57,15 @@ model Enderecos {
 }
 
 model PontosCulturais {
-  id          String @id @default(uuid())
-  nome        String
-  importancia String
-  referencia  String
-  hora_inicio String
-  hora_fim    String
-  imagem      String
-  status      Int    @default(1)
+  id             String @id @default(uuid())
+  nome           String
+  importancia    String
+  como_preservar String?
+  referencia     String
+  hora_inicio    String
+  hora_fim       String
+  imagem         String
+  status         Int    @default(1)
 
   id_endereco String
 
@@ -86,6 +87,38 @@ model Eventos {
   id_endereco    String
   id_instituicao String
 
-  Instituicao Instituicoes @relation(fields: [id_instituicao], references: [id])
-  Endereco    Enderecos    @relation(fields: [id_endereco], references: [id])
+  Instituicao             Instituicoes              @relation(fields: [id_instituicao], references: [id])
+  Endereco                Enderecos                 @relation(fields: [id_endereco], references: [id])
+  sustentabilidadeXevento sustentabilidadeXevento[]
+  acessibilidadeXevento   acessibilidadeXevento[]
+}
+
+model sustentabilidadeXevento {
+  id                  String @id @default(uuid())
+  id_sustentabilidade String
+  id_evento           String
+
+  Sustentabilidade pontos_sustentabilidade @relation(fields: [id_sustentabilidade], references: [id])
+  Evento           Eventos                 @relation(fields: [id_evento], references: [id])
+}
+
+model pontos_sustentabilidade {
+  id                      String                    @id @default(uuid())
+  descricao               String
+  sustentabilidadeXevento sustentabilidadeXevento[]
+}
+
+model acessibilidadeXevento {
+  id                String @id @default(uuid())
+  id_acessibilidade String
+  id_evento         String
+
+  Acessibilidade pontos_acessibilidade @relation(fields: [id_acessibilidade], references: [id])
+  Evento         Eventos               @relation(fields: [id_evento], references: [id])
+}
+
+model pontos_acessibilidade {
+  id                    String                  @id @default(uuid())
+  descricao             String
+  acessibilidadeXevento acessibilidadeXevento[]
 }
