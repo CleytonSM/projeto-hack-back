@@ -1,9 +1,9 @@
 export interface EnderecosProps {
-    bairro: string,
-    cep: string,
-    cidade: string,
-    estado: string,
-    numero: string,
-    rua: string,
-    id_ponto_cultural: string
+   bairro: string,
+   cep: string,
+   cidade: string,
+   estado: string,
+   id_ponto_cultural: string,
+   numero: string,
+   rua: string,
 }
