@@ -5,9 +5,12 @@ import { EventosRepository } from "../interfaces/eventos-interface"
 export class PrismaEventosRepository implements EventosRepository {
     async create(data: Prisma.EventosUncheckedCreateInput): Promise<Eventos | null> {
         try {
-            return await prisma.eventos.create({
+            console.log(data)
+            const evento = await prisma.eventos.create({
                 data
             })
+            
+            return evento
         } catch {
             return null
         }

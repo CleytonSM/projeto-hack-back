@@ -6,7 +6,7 @@ import { EventosProps } from "../@types/Evento";
 export class EventosService {
     constructor(private eventosRepository: EventosRepository) { }
 
-    async create(data: EventosProps): Promise<Eventos> {
+    async create(data: Prisma.EventosUncheckedCreateInput): Promise<Eventos> {
         const evento = await this.eventosRepository.create(data)
 
         if (!evento) {
