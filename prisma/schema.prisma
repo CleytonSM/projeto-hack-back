@@ -15,6 +15,25 @@ model Usuarios {
   nome      String
   sobrenome String
   telefone  String
-  email     String
+  email     String @unique
   senha     String
+  status    Int    @default(1)
+}
+
+enum perfil_empresarial {
+  instituicao_publica
+  eco_friendly
+  inclusao_social
+  restauracao_ambiental
+}
+
+model Instituicoes {
+  id                 String             @id @default(uuid())
+  razao_social       String
+  descricao          String
+  imagem             String
+  perfil_empresarial perfil_empresarial
+  email              String             @unique
+  senha              String
+  status             Int                @default(1)
 }
