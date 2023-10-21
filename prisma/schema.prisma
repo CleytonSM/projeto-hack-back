@@ -18,3 +18,20 @@ model Usuarios {
   email     String
   senha     String
 }
+
+enum perfil_empresarial {
+  instituicao_publica
+  eco_friendly
+  inclusao_social
+  restauracao_ambiental
+}
+
+model Instituicoes {
+  id                 String @id @default(uuid())
+  razao_social       String
+  descricao          String
+  imagem             String
+  perfil_empresarial perfil_empresarial
+  email              String
+  senha              String
+}
