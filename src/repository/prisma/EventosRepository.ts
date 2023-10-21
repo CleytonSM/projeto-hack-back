@@ -9,7 +9,7 @@ export class PrismaEventosRepository implements EventosRepository {
             const evento = await prisma.eventos.create({
                 data
             })
-            
+
             return evento
         } catch {
             return null
@@ -38,10 +38,12 @@ export class PrismaEventosRepository implements EventosRepository {
         }
     }
 
-    async searchEvento(): Promise<Eventos[] | null> {
+    async searchEvento(search: any): Promise<Eventos[] | null> {
         try {
-            const eventos = await prisma.eventos.findMany()
-            
+            const eventos = await prisma.eventos.findMany({
+                where: search
+            })
+
             return eventos
         } catch {
             return null

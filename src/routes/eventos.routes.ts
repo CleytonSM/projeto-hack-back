@@ -17,4 +17,8 @@ export const eventosRoutes = async (app: FastifyInstance) => {
     app.get('/get-all', async (req, rep) => {
         await eventosController.getAllEventosHandler(req, rep)
     })
+
+    app.get('/search', async (req, rep) => {
+        await eventosController.searchEventoHandler(req, rep)
+    })
 }

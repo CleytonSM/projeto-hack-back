@@ -35,4 +35,14 @@ export class EventosService {
 
         return eventos
     }
+
+    async searchEvento(search: any): Promise<Eventos[] | null> {
+        const eventos = await this.eventosRepository.searchEvento(search)
+
+        if (!eventos) {
+            throw new AppError('Erro ao encontrar eventos.')
+        }
+
+        return eventos
+    }
 }
