@@ -12,4 +12,26 @@ export class PrismaEventosRepository implements EventosRepository {
             return null
         }
     }
+
+    async getById(id: string): Promise<Eventos | null> {
+        try {
+            const evento = await prisma.eventos.findUnique({
+                where: {
+                    id
+                }
+            })
+            return evento
+        } catch {
+            return null
+        }
+    }
+
+    async getAll(): Promise<Eventos[] | null> {
+        try {
+            const eventos = await prisma.eventos.findMany()
+            return eventos
+        } catch {
+            return null
+        }
+    }
 }

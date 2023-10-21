@@ -74,7 +74,7 @@ model Eventos {
   nome            String
   descricao       String
   como_participar String
-  data            String
+  data            DateTime
   hora_inicio     String
   hora_fim        String
   imagem          String
