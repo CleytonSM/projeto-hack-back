@@ -51,10 +51,6 @@ export class PontosCulturaisController {
             if(!pontoCultural) {
                 return rep.status(400).send({ success: false, message: 'Erro ao cadastrar' })
             }
-            const idPontoCultural = await enderecoService.addIdPontoCultural(pontoCultural.id, endereco.id)
-            if(!idPontoCultural) {
-                return rep.status(400).send({ success: false, message: 'Erro ao cadastrar' })
-            }
             
             return rep.status(201).send({ success: true, data: {...pontoCultural,...endereco} })
         } catch (error: any) {
