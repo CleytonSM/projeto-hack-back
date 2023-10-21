@@ -49,15 +49,12 @@ model Enderecos {
   cep    String
   status Int    @default(1)
 
-  id_ponto_cultural String?
-  id_evento         String?
-
   PontosCulturais PontosCulturais[]
   Eventos         Eventos[]
 }
 
 model PontosCulturais {
-  id             String @id @default(uuid())
+  id             String  @id @default(uuid())
   nome           String
   importancia    String
   como_preservar String?
@@ -65,7 +62,7 @@ model PontosCulturais {
   hora_inicio    String
   hora_fim       String
   imagem         String
-  status         Int    @default(1)
+  status         Int     @default(1)
 
   id_endereco String
 
