@@ -15,8 +15,9 @@ model Usuarios {
   nome      String
   sobrenome String
   telefone  String
-  email     String
+  email     String @unique
   senha     String
+  status    Int    @default(1)
 }
 
 enum perfil_empresarial {
@@ -27,11 +28,12 @@ enum perfil_empresarial {
 }
 
 model Instituicoes {
-  id                 String @id @default(uuid())
+  id                 String             @id @default(uuid())
   razao_social       String
   descricao          String
   imagem             String
   perfil_empresarial perfil_empresarial
-  email              String
+  email              String             @unique
   senha              String
+  status             Int                @default(1)
 }
