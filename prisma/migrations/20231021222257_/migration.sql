@@ -64,7 +64,7 @@ CREATE TABLE `Eventos` (
     `nome` VARCHAR(191) NOT NULL,
     `descricao` VARCHAR(191) NOT NULL,
     `como_participar` VARCHAR(191) NOT NULL,
-    `data` VARCHAR(191) NOT NULL,
+    `data` DATETIME(3) NOT NULL,
     `hora_inicio` VARCHAR(191) NOT NULL,
     `hora_fim` VARCHAR(191) NOT NULL,
     `imagem` VARCHAR(191) NOT NULL,
