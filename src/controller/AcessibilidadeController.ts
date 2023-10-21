@@ -24,4 +24,21 @@ export class AcessibidadeController {
             return rep.status(400).send({ success: false, message: e.message })
         }
     }
+
+    async getAllHandler(req: FastifyRequest, rep: FastifyReply) {
+        const acessibilidadeService = makeAcessibilidadeService()
+
+        try {
+            const acessibilidades = await acessibilidadeService.getAll()
+
+            if (!acessibilidades[0]) {
+                return rep.status(400).send({ success: false, message: 'Nenhuma acessibilidade encontrada' })
+            }
+
+            return rep.status(200).send({ success: true, data: acessibilidades })
+        } catch (e: any) {
+            return rep.status(400).send({ success: false, message: e.message })
+        }
+    }
+
 }

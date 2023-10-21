@@ -27,18 +27,7 @@ export class PontosCulturaisController {
         const pontosCulturaisService = makePontosCulturaisService()
         const enderecoService = makeEnderecosService()
         try {
-            const endereco = await enderecoService.create({
-                rua,
-                numero,
-                bairro,
-                cidade,
-                estado,
-                cep,
-            })
-
-            if(!endereco) {
-                return rep.status(400).send({ success: false, message: 'Erro ao cadastrar' })
-            }
+            
             const pontoCultural = await pontosCulturaisService.create({
                 nome,
                 importancia,
@@ -46,9 +35,23 @@ export class PontosCulturaisController {
                 hora_inicio,
                 hora_fim,
                 imagem,
-                id_endereco: endereco.id
             })
+
             if(!pontoCultural) {
+                return rep.status(400).send({ success: false, message: 'Erro ao cadastrar' })
+            }
+
+            const endereco = await enderecoService.create({
+                rua,
+                numero,
+                bairro,
+                cidade,
+                estado,
+                cep,
+                id_ponto_cultural: pontoCultural.id
+            })
+            
+            if(!endereco) {
                 return rep.status(400).send({ success: false, message: 'Erro ao cadastrar' })
             }
             

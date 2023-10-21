@@ -1,5 +1,5 @@
-import { PrismaSustentabilidadesRepository } from "../repository/prisma/sustentabilidadeRepository";
-import { SustentabilidadeService } from "../services/sustentabilidadeService";
+import { PrismaSustentabilidadesRepository } from "../repository/prisma/SustentabilidadeRepository"
+import { SustentabilidadeService } from "../services/SustentabilidadeService"
 
 export const makeSustentabilidadeService = () => {
     const sustentabilidadeRepository = new PrismaSustentabilidadesRepository

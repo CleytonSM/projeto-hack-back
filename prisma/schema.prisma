@@ -40,17 +40,19 @@ model Instituicoes {
 }
 
 model Enderecos {
-  id     String @id @default(uuid())
-  rua    String
-  numero String
-  bairro String
-  cidade String
-  estado String
-  cep    String
-  status Int    @default(1)
+  id                String  @id @default(uuid())
+  rua               String
+  numero            String
+  bairro            String
+  cidade            String
+  estado            String
+  cep               String
+  status            Int     @default(1)
+  id_ponto_cultural String?
+  id_evento         String?
 
-  PontosCulturais PontosCulturais[]
-  Eventos         Eventos[]
+  PontoCultural PontosCulturais? @relation(fields: [id_ponto_cultural], references: [id])
+  Evento        Eventos?         @relation(fields: [id_evento], references: [id])
 }
 
 model PontosCulturais {
@@ -64,9 +66,7 @@ model PontosCulturais {
   imagem         String
   status         Int     @default(1)
 
-  id_endereco String
-
-  Endereco Enderecos @relation(fields: [id_endereco], references: [id])
+  Enderecos Enderecos[]
 }
 
 model Eventos {
@@ -81,13 +81,12 @@ model Eventos {
   ingresso_social String
   status          Int    @default(1)
 
-  id_endereco    String
   id_instituicao String
 
   Instituicao             Instituicoes              @relation(fields: [id_instituicao], references: [id])
-  Endereco                Enderecos                 @relation(fields: [id_endereco], references: [id])
   sustentabilidadeXevento sustentabilidadeXevento[]
   acessibilidadeXevento   acessibilidadeXevento[]
+  Enderecos               Enderecos[]
 }
 
 model sustentabilidadeXevento {
