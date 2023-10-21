@@ -1,4 +1,4 @@
-import { PontosCulturais, Prisma } from "@prisma/client";
+import { Enderecos, PontosCulturais, Prisma } from "@prisma/client";
 import { PontosCulturaisRepository } from "../interfaces/pontosCulturais-interface";
 import { prisma } from "../../lib/prisma";
 
@@ -13,6 +13,21 @@ export class PrismaPontosCulturaisRepository implements PontosCulturaisRepositor
             return pontoCultural
         } catch (error) {
             return null
+        }
+    }
+
+    async getById(id: string): Promise<null> {
+        try {
+            const pontoCultural = await prisma.pontosCulturais.findUnique({
+                where: {
+                    id
+                }, select: {
+                    
+                }
+            })
+            })
+        } catch (error) {
+            
         }
     }
 }
