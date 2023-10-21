@@ -62,4 +62,18 @@ export class EventosController {
             return rep.status(400).send({ success: false, message: error.message })
         }
     }
+
+    searchEventoHandler(req: FastifyRequest, rep: FastifyReply) {
+        //@ts-ignore
+        const keys = Object.keys(req.query)
+        //@ts-ignore
+        const values = Object.values(req.query)
+
+        for(let i = 0; i < keys.length; i++) {
+            switch (keys[i]) {
+                case 'descricao':
+                     
+            }
+        }
+    }
 }
