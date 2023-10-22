@@ -1,6 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { makeEventosService } from "../factory/makeEventosService";
+import { makeSustentabilidadeService } from "../factory/makeSustentabilidadeService";
+import { makeAcessibilidadeService } from "../factory/makeAcessibilidadeService";
+import { makeSusAccService } from "../factory/makeSusAccService";
+import { makeEnderecosService } from "../factory/makeEnderecosService";
 
 export class EventosController {
     async createEventoHandler(req: FastifyRequest, rep: FastifyReply) {
@@ -14,10 +18,32 @@ export class EventosController {
             imagem: z.string().default('will-be-replaced'),
             ingresso_social: z.string(),
             id_instituicao: z.string(),
+            sustentabilidadeXevento: z.array(z.string()),
+            acessibilidadeXevento: z.array(z.string()),
+            rua: z.string(),
+            numero: z.string(),
+            bairro: z.string(),
+            cidade: z.string(),
+            estado: z.string(),
+            cep: z.string(),
         })
-        const { nome, descricao, como_participar, data, hora_fim, hora_inicio, id_instituicao, imagem, ingresso_social } = eventoSchema.parse(req.body)
+        const { nome, descricao, como_participar, data,hora_fim,hora_inicio,id_instituicao,imagem,ingresso_social,acessibilidadeXevento,sustentabilidadeXevento, rua, numero, bairro, cidade, estado, cep  } = eventoSchema.parse(req.body)
         const eventoService = makeEventosService()
+        const sustentabilidadeService = makeSustentabilidadeService()
+        const acessibilidadeService = makeAcessibilidadeService()
+        const susAccService = makeSusAccService()
+        const enderecoService = makeEnderecosService()
         try {
+            const sustentabilidade = await sustentabilidadeService.getById("461b3732-10ea-4e53-863e-191f1a0b2d6f")
+            if(!sustentabilidade) {
+                return rep.status(400).send({ success: false, message: 'Erro ao cadastrar' })
+            }
+
+            const acessibilidade = await acessibilidadeService.getById("06632318-0c53-4090-bf37-ae41e179314c")
+            if(!acessibilidade) {
+                return rep.status(400).send({ success: false, message: 'Erro ao cadastrar' })
+            }
+
             const evento = await eventoService.create({
                 nome,
                 descricao,
@@ -29,7 +55,35 @@ export class EventosController {
                 imagem,
                 ingresso_social
             })
-            return rep.status(201).send({ success: true, data: evento })
+
+            const arraySustentabilidade = sustentabilidadeXevento.map((id: string) => {
+                return {
+                    id_sustentabilidade: id,
+                    id_evento: evento.id
+            }
+        })
+            
+            const arrayAcessibilidade = acessibilidadeXevento.map((id: string) => {
+                return {
+                    id_acessibilidade: id,
+                    id_evento: evento.id
+                }
+            })
+            
+            console.log(await susAccService.createSustentabilidade(arraySustentabilidade))
+            console.log(await susAccService.createAcessibilidade(arrayAcessibilidade))
+            const endereco = await enderecoService.create({
+                bairro,
+                cep, cidade, estado, numero, rua, id_evento: evento.id
+    
+            })
+
+
+            return rep.status(201).send({ success: true, data: {
+                evento,
+                Endereco: [endereco]
+            }})
+        
         } catch (error: any) {
             return rep.status(400).send({ success: false, message: error.message })
         }
