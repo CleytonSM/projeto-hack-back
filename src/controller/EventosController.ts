@@ -29,8 +29,6 @@ export class EventosController {
         })
         const { nome, descricao, como_participar, data, hora_fim, hora_inicio, id_instituicao, imagem, ingresso_social, acessibilidadeXevento, sustentabilidadeXevento, rua, numero, bairro, id_cidade, estado, cep } = eventoSchema.parse(req.body)
         const eventoService = makeEventosService()
-        const sustentabilidadeService = makeSustentabilidadeService()
-        const acessibilidadeService = makeAcessibilidadeService()
         const susAccService = makeSusAccService()
         const enderecoService = makeEnderecosService()
         try {

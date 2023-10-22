@@ -18,4 +18,19 @@ export class PrismaMarcarPresencaRepository implements MarcarPresencaInterface {
             return null
         }
     }   
+
+    async getUsuariosEventos(id_usuario: string): Promise<marcar_presenca[] | null> {
+        try {
+            const marcar_presenca = await prisma.marcar_presenca.findMany({
+                where: {
+                    id_usuario
+                }
+            })
+
+            return marcar_presenca
+        } catch (error) {
+            return null
+        }
+        
+    }
 }

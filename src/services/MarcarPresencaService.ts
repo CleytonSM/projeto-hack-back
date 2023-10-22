@@ -16,4 +16,14 @@ export class MarcarPresencaService {
 
         return marcar_presenca
     }
+
+    async getUsuariosEventos (id_usuario: string): Promise<marcar_presenca[] | null> { 
+        const marcar_presenca = await this.marcarPresencaInterface.getUsuariosEventos(id_usuario)
+
+        if (!marcar_presenca) {
+            throw new Error('Erro ao buscar eventos')
+        }
+
+        return marcar_presenca
+    }
 }
