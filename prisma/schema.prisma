@@ -30,15 +30,16 @@ enum perfil_empresarial {
 }
 
 model Instituicoes {
-  id                 String             @id @default(uuid())
-  razao_social       String
-  descricao          String
-  imagem             String
-  perfil_empresarial perfil_empresarial
-  email              String             @unique
-  senha              String
-  status             Int                @default(1)
-  Eventos            Eventos[]
+  id                        String                      @id @default(uuid())
+  razao_social              String
+  descricao                 String
+  imagem                    String
+  perfil_empresarial        perfil_empresarial
+  email                     String                      @unique
+  senha                     String
+  status                    Int                         @default(1)
+  Eventos                   Eventos[]
+  CertificadosXInstituicoes CertificadosXInstituicoes[]
 }
 
 model Enderecos {
@@ -132,14 +133,34 @@ model pontos_acessibilidade {
   acessibilidadeXevento acessibilidadeXevento[]
 }
 
-
 model marcar_presenca {
-  id String @id @default(uuid())
-  id_evento String
+  id         String  @id @default(uuid())
+  id_evento  String
   id_usuario String
   comentario String?
   isFavorite Boolean @default(false)
 
-  Eventos Eventos @relation(fields: [id_evento], references: [id])
+  Eventos  Eventos  @relation(fields: [id_evento], references: [id])
   Usuarios Usuarios @relation(fields: [id_usuario], references: [id])
+}
+
+enum tipos_certificados {
+  eventos_sustentaveis_1
+  eventos_sustentaveis_5
+  eventos_sustentaveis_10
+}
+
+model Certificados {
+  id                        String                      @id @default(uuid())
+  tipo                      tipos_certificados
+  CertificadosXInstituicoes CertificadosXInstituicoes[]
+}
+
+model CertificadosXInstituicoes {
+  id             String @id @default(uuid())
+  id_instituicao String
+  id_certificado String
+
+  Instituicoes Instituicoes @relation(fields: [id_instituicao], references: [id])
+  Certificados Certificados @relation(fields: [id_certificado], references: [id])
 }

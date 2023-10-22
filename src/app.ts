@@ -7,6 +7,8 @@ import { env } from "./env";
 
 const app = fastify()
 
+app.register(cors)
+
 // app.register(fastifyJwt, {
 //     secret: env.SECRET_JWT,
 //     sign: {
