@@ -5,4 +5,5 @@ import { PontoCulturalProps } from "../../@types/PontoCulturalReturn";
 export interface PontosCulturaisRepository {
     create(data: Prisma.PontosCulturaisUncheckedCreateInput): Promise<any | null>
     getById(id: string): Promise<PontoCulturalProps | null>
+    getAll(): Promise<PontosCulturais[] | null>
 }

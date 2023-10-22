@@ -12,4 +12,7 @@ export const pontosCulturaisRoutes = async (app: FastifyInstance) => {
     app.get('/get/:id', async (req, rep) => {
         await pontosCulturaisController.getByIdHandler(req, rep)
     })
+    app.get('/get-all', async (req, rep) => {
+        await pontosCulturaisController.getAllHandler(req, rep)
+    })
 }

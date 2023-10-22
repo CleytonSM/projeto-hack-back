@@ -37,7 +37,7 @@ export class PrismaPontosCulturaisRepository implements PontosCulturaisRepositor
                             id: true,
                             bairro: true,
                             cep: true,
-                            cidade: true,
+                            id_cidade: true,
                             estado: true,
                             id_evento: true,
                             id_ponto_cultural: true,
@@ -49,6 +49,41 @@ export class PrismaPontosCulturaisRepository implements PontosCulturaisRepositor
             })
             return pontoCultural as PontoCulturalProps;
         } catch (error) {
+            return null
+        }
+    }
+
+    async getAll(): Promise<PontoCulturalProps[] | null> {
+        try {
+            const pontosCulturais = await prisma.pontosCulturais.findMany({
+                select: {
+                    id: true,
+                    nome: true,
+                    importancia: true,
+                    como_preservar: true,
+                    hora_inicio: true,
+                    hora_fim: true,
+                    imagem: true,
+                    referencia: true,
+                    status: true,
+                    Enderecos: {
+                        select: {
+                            id: true,
+                            bairro: true,
+                            cep: true,
+                            id_cidade: true,
+                            estado: true,
+                            id_evento: true,
+                            id_ponto_cultural: true,
+                            numero: true,
+                            rua: true,
+                        }
+                    }
+                }
+            })
+
+            return pontosCulturais as PontoCulturalProps[]
+        } catch {
             return null
         }
     }
