@@ -47,4 +47,18 @@ export class PrismaEnderecosRepository implements EnderecosRepository {
             return null
         }
     }
+
+    async getEnderecoById(id_evento: string): Promise<Enderecos | null> {
+        try {
+            const endereco = await prisma.enderecos.findFirst({
+                where: {
+                    id_evento: id_evento
+                }
+            })
+
+            return endereco
+        } catch {
+            return null
+        }
+    }
 }

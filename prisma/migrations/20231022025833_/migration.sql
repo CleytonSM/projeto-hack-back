@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE `Eventos` ADD COLUMN `count_rating` INTEGER NOT NULL DEFAULT 0,
-    ADD COLUMN `rating` DOUBLE NOT NULL DEFAULT 0;

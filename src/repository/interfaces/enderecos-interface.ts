@@ -5,4 +5,5 @@ export interface EnderecosRepository {
     createCidades(data: Prisma.CidadesUncheckedCreateInput[]): Promise<any | null>
     getAllCidades(): Promise<Cidades[] | null>
     getCidadeById(id: number): Promise<Cidades | null>
+    getEnderecoById(id_evento: string): Promise<Enderecos | null>
 }

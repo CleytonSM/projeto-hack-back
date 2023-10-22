@@ -16,13 +16,42 @@ export class PrismaEventosRepository implements EventosRepository {
         }
     }
 
-    async getById(id: string): Promise<Eventos | null> {
+    async getById(id: string): Promise<any> {
         try {
             const evento = await prisma.eventos.findUnique({
                 where: {
                     id
+                }, select: {
+                    id: true,
+                    nome: true,
+                    descricao: true,
+                    como_participar: true,
+                    data: true,
+                    hora_inicio: true,
+                    hora_fim: true,
+                    imagem: true,
+                    ingresso_social: true,
+                    status: true,
+                    rating: true,
+                    count_rating: true,
+                    Enderecos: {
+                        select: {
+                            id: true,
+                            rua: true,
+                            numero: true,
+                            bairro: true,
+                            estado: true,
+                            cep: true,
+                            status: true,        
+                            Cidades: {
+                                select: {
+                                    id: true,
+                                    cidade: true,
+                            }
+                        }
+                    }
                 }
-            })
+            }})
             return evento
         } catch {
             return null

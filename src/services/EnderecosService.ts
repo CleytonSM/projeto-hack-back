@@ -44,4 +44,14 @@ export class EnderecosService {
 
         return cidade
     }
+
+    async getEnderecoById(id_evento: string): Promise<Enderecos | null> {
+        const endereco = await this.enderecoRepository.getEnderecoById(id_evento)
+
+        if (!endereco) {
+            throw new AppError('Erro ao listar endereço')
+        }
+
+        return endereco
+    }
 }

@@ -95,7 +95,9 @@ export class EventosController {
         const eventoService = makeEventosService()
         try {
             const evento = await eventoService.getById(id)
-            return rep.status(200).send({ success: true, data: evento })
+        
+            return rep.status(200).send({ success: true, data: evento
+        })
         } catch (error: any) {
             return rep.status(400).send({ success: false, message: error.message })
         }

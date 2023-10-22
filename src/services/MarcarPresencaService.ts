@@ -42,7 +42,7 @@ export class MarcarPresencaService {
         const marcar_presenca = await this.marcarPresencaInterface.updateFavorite(id, isFavorite)
 
         if(!marcar_presenca) {
-            throw new AppError('Erro ao atualizar favorito')
+            throw new Error()
         }
         
         return marcar_presenca

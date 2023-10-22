@@ -78,6 +78,8 @@ CREATE TABLE `Eventos` (
     `imagem` VARCHAR(191) NOT NULL,
     `ingresso_social` VARCHAR(191) NOT NULL,
     `status` INTEGER NOT NULL DEFAULT 1,
+    `rating` DOUBLE NOT NULL DEFAULT 0,
+    `count_rating` INTEGER NOT NULL DEFAULT 0,
     `id_instituicao` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -123,7 +125,7 @@ CREATE TABLE `marcar_presenca` (
     `id_evento` VARCHAR(191) NOT NULL,
     `id_usuario` VARCHAR(191) NOT NULL,
     `comentario` VARCHAR(191) NULL,
-    `isFavorite` BOOLEAN NOT NULL,
+    `isFavorite` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
