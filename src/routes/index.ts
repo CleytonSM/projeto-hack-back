@@ -5,6 +5,7 @@ import { pontosCulturaisRoutes } from "./pontosCulturais.routes";
 import { sustentabilidadesRoutes } from "./sustentabilidade.routes";
 import { acessibilidadeRoutes } from "./acessibilidade.routes";
 import { eventosRoutes } from "./eventos.routes";
+import { enderecoRoutes } from "./endereco.routes";
 
 export const routes = async (app: FastifyInstance) => {
     app.register(usuariosRoutes,  { prefix: '/usuarios'})
@@ -13,4 +14,5 @@ export const routes = async (app: FastifyInstance) => {
     app.register(sustentabilidadesRoutes, { prefix: '/sustentabilidades'})
     app.register(acessibilidadeRoutes, { prefix: '/acessibilidades'})
     app.register(eventosRoutes, { prefix: '/eventos'})
+    app.register(enderecoRoutes, { prefix: '/enderecos'})
 }

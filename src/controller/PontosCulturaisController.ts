@@ -18,7 +18,7 @@ export class PontosCulturaisController {
             rua: z.string(),
             numero: z.string(),
             bairro: z.string(),
-            id_cidade: z.string(),
+            id_cidade: z.number(),
             estado: z.string(),
             cep: z.string(),
         })
@@ -43,8 +43,12 @@ export class PontosCulturaisController {
 
             const endereco = await enderecoService.create({
                 bairro,
-                cep, id_cidade, estado, numero, rua, id_ponto_cultural: pontoCultural.id,
-    
+                cep,
+                id_cidade,
+                estado,
+                numero,
+                rua,
+                id_ponto_cultural: pontoCultural.id,
             })
             
             if(!endereco) {

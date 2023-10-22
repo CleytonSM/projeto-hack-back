@@ -23,11 +23,11 @@ export class EventosController {
             rua: z.string(),
             numero: z.string(),
             bairro: z.string(),
-            cidade: z.string(),
+            id_cidade: z.number(),
             estado: z.string(),
             cep: z.string(),
         })
-        const { nome, descricao, como_participar, data,hora_fim,hora_inicio,id_instituicao,imagem,ingresso_social,acessibilidadeXevento,sustentabilidadeXevento, rua, numero, bairro, cidade, estado, cep  } = eventoSchema.parse(req.body)
+        const { nome, descricao, como_participar, data,hora_fim,hora_inicio,id_instituicao,imagem,ingresso_social,acessibilidadeXevento,sustentabilidadeXevento, rua, numero, bairro, id_cidade, estado, cep  } = eventoSchema.parse(req.body)
         const eventoService = makeEventosService()
         const sustentabilidadeService = makeSustentabilidadeService()
         const acessibilidadeService = makeAcessibilidadeService()
@@ -74,8 +74,12 @@ export class EventosController {
             console.log(await susAccService.createAcessibilidade(arrayAcessibilidade))
             const endereco = await enderecoService.create({
                 bairro,
-                cep, cidade, estado, numero, rua, id_evento: evento.id
-    
+                cep,
+                id_cidade,
+                estado,
+                numero,
+                rua,
+                id_evento: evento.id
             })
 
 
