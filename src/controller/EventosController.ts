@@ -27,23 +27,13 @@ export class EventosController {
             estado: z.string(),
             cep: z.string(),
         })
-        const { nome, descricao, como_participar, data,hora_fim,hora_inicio,id_instituicao,imagem,ingresso_social,acessibilidadeXevento,sustentabilidadeXevento, rua, numero, bairro, id_cidade, estado, cep  } = eventoSchema.parse(req.body)
+        const { nome, descricao, como_participar, data, hora_fim, hora_inicio, id_instituicao, imagem, ingresso_social, acessibilidadeXevento, sustentabilidadeXevento, rua, numero, bairro, id_cidade, estado, cep } = eventoSchema.parse(req.body)
         const eventoService = makeEventosService()
         const sustentabilidadeService = makeSustentabilidadeService()
         const acessibilidadeService = makeAcessibilidadeService()
         const susAccService = makeSusAccService()
         const enderecoService = makeEnderecosService()
         try {
-            const sustentabilidade = await sustentabilidadeService.getById("461b3732-10ea-4e53-863e-191f1a0b2d6f")
-            if(!sustentabilidade) {
-                return rep.status(400).send({ success: false, message: 'Erro ao cadastrar' })
-            }
-
-            const acessibilidade = await acessibilidadeService.getById("06632318-0c53-4090-bf37-ae41e179314c")
-            if(!acessibilidade) {
-                return rep.status(400).send({ success: false, message: 'Erro ao cadastrar' })
-            }
-
             const evento = await eventoService.create({
                 nome,
                 descricao,
@@ -60,18 +50,19 @@ export class EventosController {
                 return {
                     id_sustentabilidade: id,
                     id_evento: evento.id
-            }
-        })
-            
+                }
+            })
+
             const arrayAcessibilidade = acessibilidadeXevento.map((id: string) => {
                 return {
                     id_acessibilidade: id,
                     id_evento: evento.id
                 }
             })
-            
+
             await susAccService.createSustentabilidade(arraySustentabilidade)
             await susAccService.createAcessibilidade(arrayAcessibilidade)
+
             const endereco = await enderecoService.create({
                 bairro,
                 cep,
@@ -83,11 +74,13 @@ export class EventosController {
             })
 
 
-            return rep.status(201).send({ success: true, data: {
-                evento,
-                Endereco: [endereco]
-            }})
-        
+            return rep.status(201).send({
+                success: true, data: {
+                    evento,
+                    Endereco: [endereco]
+                }
+            })
+
         } catch (error: any) {
             return rep.status(400).send({ success: false, message: error.message })
         }
@@ -196,8 +189,9 @@ export class EventosController {
                 case 'local':
                     searchParams.Enderecos = {
                         some: {
-                            cidade: {
-                                equals: values[i]
+                            id_cidade: {
+                                //@ts-ignore
+                                equals: parseInt(values[i])
                             }
                         }
                     }
