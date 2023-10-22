@@ -21,4 +21,8 @@ export const eventosRoutes = async (app: FastifyInstance) => {
     app.get('/search', async (req, rep) => {
         await eventosController.searchEventoHandler(req, rep)
     })
+
+    app.put('/update-rating/:id', async (req, rep) => {
+        await eventosController.updateRatingHandler(req, rep)
+    })
 }

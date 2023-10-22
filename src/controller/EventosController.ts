@@ -5,6 +5,7 @@ import { makeSustentabilidadeService } from "../factory/makeSustentabilidadeServ
 import { makeAcessibilidadeService } from "../factory/makeAcessibilidadeService";
 import { makeSusAccService } from "../factory/makeSusAccService";
 import { makeEnderecosService } from "../factory/makeEnderecosService";
+import { AppError } from "../error/AppError";
 
 export class EventosController {
     async createEventoHandler(req: FastifyRequest, rep: FastifyReply) {
@@ -210,6 +211,38 @@ export class EventosController {
         try {
             const evento = await eventoService.searchEvento(searchParams)
 
+            return rep.status(200).send({ success: true, data: evento })
+        } catch (error: any) {
+            return rep.status(400).send({ success: false, message: error.message })
+        }
+    }
+
+
+    async updateRatingHandler(req: FastifyRequest, rep: FastifyReply) {
+        const idEventoSchema = z.object({
+            id: z.string()
+        })
+        
+        const ratingSchema = z.object({
+            rating: z.number()
+        })
+        var { rating } = ratingSchema.parse(req.body)
+
+        if(rating > 10 || rating < 0){
+            throw new AppError('Nota inválida')
+        }
+        const { id } = idEventoSchema.parse(req.params)
+
+
+        const eventoService = makeEventosService()
+
+        try {
+            const getEvento = await eventoService.getById(id)
+            const couting = getEvento?.count_rating || 0
+            const rating2 = getEvento?.rating || 0
+            rating = rating + rating2
+            await eventoService.updateRating(id, rating, couting)
+            const evento = await eventoService.getById(id)
             return rep.status(200).send({ success: true, data: evento })
         } catch (error: any) {
             return rep.status(400).send({ success: false, message: error.message })
