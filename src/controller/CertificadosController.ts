@@ -21,4 +21,28 @@ export class CertificadosController {
             return null
         }
     }
+
+    async getCertificadosInstituicaoHandler(req: FastifyRequest, rep: FastifyReply) {
+        const idSchema = z.object({
+            id_instituicao: z.string()
+        })
+
+        const { id_instituicao } = idSchema.parse(req.params)
+
+        const certificadoService = makeCertificadoService()
+
+        try {
+
+            const certificados = await certificadoService.getCertificadosInstituicao(id_instituicao)
+
+            if (!certificados) {
+                return rep.status(400).send({ success: false, message: 'Nenhum certificado encontrado' })
+            }
+
+            return rep.status(200).send({ success: true, data: certificados })
+            
+        } catch (e: any) {
+            return rep.status(400).send({ success: false, message: e.message })
+        }
+    }
 }

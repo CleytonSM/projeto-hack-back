@@ -6,4 +6,8 @@ export const certificadosRoutes = async (app: FastifyInstance) => {
     app.post('/give', async (req, rep) => {
         await certificadoController.createCertificadoHandler(req, rep)
     })
+
+    app.get('/get-insti/:id_instituicao', async (req, rep) => {
+        await certificadoController.getCertificadosInstituicaoHandler(req, rep)
+    })
 }
