@@ -9,3 +9,158 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Usuarios {
+  id        String @id @default(uuid())
+  nome      String
+  sobrenome String
+  telefone  String
+  email     String @unique
+  senha     String
+  status    Int    @default(1)
+
+  marcar_presenca marcar_presenca[]
+}
+
+enum perfil_empresarial {
+  instituicao_publica
+  eco_friendly
+  inclusao_social
+  restauracao_ambiental
+}
+
+model Instituicoes {
+  id                        String                      @id @default(uuid())
+  razao_social              String
+  descricao                 String
+  imagem                    String
+  perfil_empresarial        perfil_empresarial
+  email                     String                      @unique
+  senha                     String
+  status                    Int                         @default(1)
+  Eventos                   Eventos[]
+  CertificadosXInstituicoes CertificadosXInstituicoes[]
+}
+
+model Enderecos {
+  id                String  @id @default(uuid())
+  rua               String
+  numero            String
+  bairro            String
+  id_cidade         Int
+  estado            String
+  cep               String
+  status            Int     @default(1)
+  id_ponto_cultural String?
+  id_evento         String?
+
+  PontoCultural PontosCulturais? @relation(fields: [id_ponto_cultural], references: [id])
+  Evento        Eventos?         @relation(fields: [id_evento], references: [id])
+  Cidades       Cidades          @relation(fields: [id_cidade], references: [id])
+}
+
+model Cidades {
+  id        Int         @id
+  cidade    String
+  Enderecos Enderecos[]
+}
+
+model PontosCulturais {
+  id             String  @id @default(uuid())
+  nome           String
+  importancia    String
+  como_preservar String?
+  referencia     String
+  hora_inicio    String
+  hora_fim       String
+  imagem         String
+  status         Int     @default(1)
+
+  Enderecos Enderecos[]
+}
+
+model Eventos {
+  id              String   @id @default(uuid())
+  nome            String
+  descricao       String
+  como_participar String
+  data            DateTime
+  hora_inicio     String
+  hora_fim        String
+  imagem          String
+  ingresso_social String
+  status          Int      @default(1)
+  rating         Float    @default(0)
+  count_rating   Int      @default(0)
+
+  id_instituicao String
+
+  Instituicao             Instituicoes              @relation(fields: [id_instituicao], references: [id])
+  sustentabilidadeXevento sustentabilidadeXevento[]
+  acessibilidadeXevento   acessibilidadeXevento[]
+  Enderecos               Enderecos[]
+
+  marcar_presenca marcar_presenca[]
+}
+
+model sustentabilidadeXevento {
+  id                  String @id @default(uuid())
+  id_sustentabilidade String
+  id_evento           String
+
+  Sustentabilidade pontos_sustentabilidade @relation(fields: [id_sustentabilidade], references: [id])
+  Evento           Eventos                 @relation(fields: [id_evento], references: [id])
+}
+
+model pontos_sustentabilidade {
+  id                      String                    @id @default(uuid())
+  descricao               String
+  sustentabilidadeXevento sustentabilidadeXevento[]
+}
+
+model acessibilidadeXevento {
+  id                String @id @default(uuid())
+  id_acessibilidade String
+  id_evento         String
+
+  Acessibilidade pontos_acessibilidade @relation(fields: [id_acessibilidade], references: [id])
+  Evento         Eventos               @relation(fields: [id_evento], references: [id])
+}
+
+model pontos_acessibilidade {
+  id                    String                  @id @default(uuid())
+  descricao             String
+  acessibilidadeXevento acessibilidadeXevento[]
+}
+
+model marcar_presenca {
+  id         String  @id @default(uuid())
+  id_evento  String
+  id_usuario String
+  comentario String?
+  isFavorite Boolean @default(false)
+
+  Eventos  Eventos  @relation(fields: [id_evento], references: [id])
+  Usuarios Usuarios @relation(fields: [id_usuario], references: [id])
+}
+
+enum tipos_certificados {
+  eventos_sustentaveis_1
+  eventos_sustentaveis_5
+  eventos_sustentaveis_10
+}
+
+model Certificados {
+  id                        String                      @id @default(uuid())
+  tipo                      tipos_certificados
+  CertificadosXInstituicoes CertificadosXInstituicoes[]
+}
+
+model CertificadosXInstituicoes {
+  id             String @id @default(uuid())
+  id_instituicao String
+  id_certificado String
+
+  Instituicoes Instituicoes @relation(fields: [id_instituicao], references: [id])
+  Certificados Certificados @relation(fields: [id_certificado], references: [id])
+}
