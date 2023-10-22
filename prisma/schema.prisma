@@ -18,6 +18,8 @@ model Usuarios {
   email     String @unique
   senha     String
   status    Int    @default(1)
+
+  marcar_presenca marcar_presenca[]
 }
 
 enum perfil_empresarial {
@@ -87,6 +89,8 @@ model Eventos {
   sustentabilidadeXevento sustentabilidadeXevento[]
   acessibilidadeXevento   acessibilidadeXevento[]
   Enderecos               Enderecos[]
+
+  marcar_presenca marcar_presenca[]
 }
 
 model sustentabilidadeXevento {
@@ -117,4 +121,16 @@ model pontos_acessibilidade {
   id                    String                  @id @default(uuid())
   descricao             String
   acessibilidadeXevento acessibilidadeXevento[]
+}
+
+
+model marcar_presenca {
+  id String @id @default(uuid())
+  id_evento String
+  id_usuario String
+  comentario String?
+  isFavorite Boolean
+
+  Eventos Eventos @relation(fields: [id_evento], references: [id])
+  Usuarios Usuarios @relation(fields: [id_usuario], references: [id])
 }

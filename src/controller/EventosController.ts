@@ -70,8 +70,8 @@ export class EventosController {
                 }
             })
             
-            console.log(await susAccService.createSustentabilidade(arraySustentabilidade))
-            console.log(await susAccService.createAcessibilidade(arrayAcessibilidade))
+            await susAccService.createSustentabilidade(arraySustentabilidade)
+            await susAccService.createAcessibilidade(arrayAcessibilidade)
             const endereco = await enderecoService.create({
                 bairro,
                 cep, cidade, estado, numero, rua, id_evento: evento.id
