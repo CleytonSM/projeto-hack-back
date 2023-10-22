@@ -90,6 +90,8 @@ model Eventos {
   imagem          String
   ingresso_social String
   status          Int      @default(1)
+  rating         Float    @default(0)
+  count_rating   Int      @default(0)
 
   id_instituicao String
 

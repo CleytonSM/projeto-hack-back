@@ -6,4 +6,5 @@ export interface EventosRepository {
     getById(id: string): Promise<Eventos | null>
     getAll(): Promise<Eventos[] | null>
     searchEvento(search: any): Promise<Eventos[] | null>
+    updateRating(id: string, rating: number, couting: number): Promise<Eventos | null>
 }

@@ -45,4 +45,15 @@ export class EventosService {
 
         return eventos
     }
+
+    async updateRating(id: string, rating: number, couting: number): Promise<Eventos | null> {
+
+        const evento = await this.eventosRepository.updateRating(id, rating, couting)
+        console.log(evento)
+        if (!evento) {
+            throw new AppError('Erro ao atualizar nota.')
+        }
+
+        return evento
+    }
 }

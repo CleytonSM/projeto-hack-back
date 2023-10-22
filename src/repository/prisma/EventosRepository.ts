@@ -49,4 +49,25 @@ export class PrismaEventosRepository implements EventosRepository {
             return null
         }
     }
+    async updateRating(id: string, rating: number, couting: number): Promise<Eventos | null> {
+        try {
+            const nota = (rating/10)/couting
+            couting++
+            console.log(id)
+            const evento = await prisma.eventos.update({
+                where: {
+                    id
+                },
+                data: {
+                    rating: nota,
+                    count_rating: couting
+                }
+            })
+            
+            
+            return evento
+        } catch (error) {
+            return null
+        }
+    }
 }
