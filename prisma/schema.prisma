@@ -46,7 +46,7 @@ model Enderecos {
   rua               String
   numero            String
   bairro            String
-  cidade            String
+  id_cidade         Int
   estado            String
   cep               String
   status            Int     @default(1)
@@ -55,6 +55,13 @@ model Enderecos {
 
   PontoCultural PontosCulturais? @relation(fields: [id_ponto_cultural], references: [id])
   Evento        Eventos?         @relation(fields: [id_evento], references: [id])
+  Cidades       Cidades          @relation(fields: [id_cidade], references: [id])
+}
+
+model Cidades {
+  id        Int         @id
+  cidade    String
+  Enderecos Enderecos[]
 }
 
 model PontosCulturais {
@@ -72,7 +79,7 @@ model PontosCulturais {
 }
 
 model Eventos {
-  id              String @id @default(uuid())
+  id              String   @id @default(uuid())
   nome            String
   descricao       String
   como_participar String
@@ -81,7 +88,7 @@ model Eventos {
   hora_fim        String
   imagem          String
   ingresso_social String
-  status          Int    @default(1)
+  status          Int      @default(1)
 
   id_instituicao String
 

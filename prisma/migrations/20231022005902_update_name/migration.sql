@@ -33,12 +33,20 @@ CREATE TABLE `Enderecos` (
     `rua` VARCHAR(191) NOT NULL,
     `numero` VARCHAR(191) NOT NULL,
     `bairro` VARCHAR(191) NOT NULL,
-    `cidade` VARCHAR(191) NOT NULL,
+    `id_cidade` INTEGER NOT NULL,
     `estado` VARCHAR(191) NOT NULL,
     `cep` VARCHAR(191) NOT NULL,
     `status` INTEGER NOT NULL DEFAULT 1,
     `id_ponto_cultural` VARCHAR(191) NULL,
     `id_evento` VARCHAR(191) NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Cidades` (
+    `id` INTEGER NOT NULL,
+    `cidade` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -114,6 +122,9 @@ ALTER TABLE `Enderecos` ADD CONSTRAINT `Enderecos_id_ponto_cultural_fkey` FOREIG
 
 -- AddForeignKey
 ALTER TABLE `Enderecos` ADD CONSTRAINT `Enderecos_id_evento_fkey` FOREIGN KEY (`id_evento`) REFERENCES `Eventos`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Enderecos` ADD CONSTRAINT `Enderecos_id_cidade_fkey` FOREIGN KEY (`id_cidade`) REFERENCES `Cidades`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Eventos` ADD CONSTRAINT `Eventos_id_instituicao_fkey` FOREIGN KEY (`id_instituicao`) REFERENCES `Instituicoes`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
