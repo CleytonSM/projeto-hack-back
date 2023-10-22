@@ -136,7 +136,7 @@ model marcar_presenca {
   id_evento String
   id_usuario String
   comentario String?
-  isFavorite Boolean
+  isFavorite Boolean @default(false)
 
   Eventos Eventos @relation(fields: [id_evento], references: [id])
   Usuarios Usuarios @relation(fields: [id_usuario], references: [id])

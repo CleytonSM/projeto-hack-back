@@ -33,4 +33,35 @@ export class PrismaMarcarPresencaRepository implements MarcarPresencaInterface {
         }
         
     }
+
+    async getPresenca(id: string): Promise<marcar_presenca | null> {
+        try {
+            const marcar_presenca = await prisma.marcar_presenca.findUnique({
+                where: {
+                    id
+                }
+            })
+
+            return marcar_presenca
+        } catch (error) {
+            return null
+        }
+    }
+
+    async updateFavorite(id: string, isFavorite: boolean): Promise<marcar_presenca | null> {
+        try {
+            const marcar_presenca = await prisma.marcar_presenca.update({
+                where: {
+                    id
+                },
+                data: {
+                    isFavorite
+                }
+            })
+            
+            return marcar_presenca
+        } catch (error) {
+            return null
+        }
+    }
 }

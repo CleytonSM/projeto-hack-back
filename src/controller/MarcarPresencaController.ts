@@ -11,10 +11,9 @@ export class MarcarPresencaController {
             id_evento: z.string().uuid(),
             id_usuario: z.string().uuid(),
             comentario: z.string().optional(),
-            isFavorite: z.boolean().default(false)
         })
 
-        const {id_evento,id_usuario,comentario, isFavorite} = marcarPresencaSchema.parse(req.body)
+        const {id_evento,id_usuario,comentario} = marcarPresencaSchema.parse(req.body)
     
         const marcarPresencaService = makeMarcarPresencaService()
 
@@ -23,7 +22,6 @@ export class MarcarPresencaController {
                 id_evento,
                 id_usuario,
                 comentario,
-                isFavorite
             })
 
             return rep.status(201).send({ success: true, data: marcarPresenca })
@@ -44,6 +42,40 @@ export class MarcarPresencaController {
             const marcarPresenca = await marcarPresencaService.getUsuariosEventos(id_usuario)
 
             return rep.status(200).send({ success: true, data: marcarPresenca})
+        } catch (error: any) {
+            return rep.status(400).send({ success: false, message: error.message })
+        }
+    }
+
+    async getPresencaHandler (req: FastifyRequest, rep: FastifyReply) {
+        const idSchema = z.object({
+            id: z.string().uuid()
+        })
+
+        const {id} = idSchema.parse(req.params)
+        const marcarPresencaService = makeMarcarPresencaService()
+        try {
+            const marcar_presenca = await marcarPresencaService.getPresenca(id)
+            return rep.status(200).send({ success: true, data: marcar_presenca })
+        } catch (error:any) {
+            return rep.status(400).send({ success: false, message: error.message }) 
+        }
+    }
+
+    async updateFavoriteHandler (req: FastifyRequest, rep: FastifyReply) {
+        const idSchema = z.object({
+            id: z.string().uuid()
+        })
+
+        const {id} = idSchema.parse(req.params)
+        const marcarPresencaService = makeMarcarPresencaService()
+        try {
+            const object = await marcarPresencaService.getPresenca(id)
+            const isFavorite = object?.isFavorite
+
+            await marcarPresencaService.updateFavorite(id, !isFavorite)
+            const marcar_presenca = await marcarPresencaService.getPresenca(id)
+            return rep.status(200).send({ success: true, data: marcar_presenca })
         } catch (error: any) {
             return rep.status(400).send({ success: false, message: error.message })
         }

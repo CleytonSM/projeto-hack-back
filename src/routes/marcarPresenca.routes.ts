@@ -12,4 +12,11 @@ export const marcarPresencaRoutes = async (app: FastifyInstance) => {
     app.get('/get-eventos/:id_usuario', async (req, rep) => {
         await marcarPresencaController.getUsuarioEventosHandler(req, rep)
     })
+    app.get('/get/:id', async (req, rep) => {
+        await marcarPresencaController.getPresencaHandler(req, rep)
+    })
+
+    app.put('/update-favorite/:id', async (req, rep) => {
+        await marcarPresencaController.updateFavoriteHandler(req, rep)
+    })
 }
