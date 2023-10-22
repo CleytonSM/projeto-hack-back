@@ -5,5 +5,5 @@ export interface EventosRepository {
     create(data: Prisma.EventosUncheckedCreateInput): Promise<Eventos | null>
     getById(id: string): Promise<Eventos | null>
     getAll(): Promise<Eventos[] | null>
-    searchEvento(): Promise<Eventos[] | null>
+    searchEvento(search: any): Promise<Eventos[] | null>
 }

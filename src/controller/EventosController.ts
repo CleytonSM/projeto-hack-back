@@ -94,7 +94,7 @@ export class EventosController {
             id: z.string()
         })
 
-        const {id} = idEventoSchema.parse(req.params)
+        const { id } = idEventoSchema.parse(req.params)
 
         const eventoService = makeEventosService()
         try {
@@ -117,7 +117,7 @@ export class EventosController {
         }
     }
 
-    searchEventoHandler(req: FastifyRequest, rep: FastifyReply) {
+    async searchEventoHandler(req: FastifyRequest, rep: FastifyReply) {
         //@ts-ignore
         const keys = Object.keys(req.query)
         //@ts-ignore
@@ -133,15 +133,90 @@ export class EventosController {
                     }
                     break
                 case 'data':
+                    const dataAtual = new Date()
                     if (values[i] === 'PS') {
-                        searchParams.data = {
+                        const diaAtual = dataAtual.getDate()
+                        const diasateDomingo = 7 - diaAtual
 
+                        const dataProximoDomingo = new Date(dataAtual);
+                        dataProximoDomingo.setDate(dataAtual.getDate() + diasateDomingo);
+
+                        const dataProximoSabado = new Date(dataProximoDomingo);
+                        dataProximoSabado.setDate(dataProximoDomingo.getDate() + 6);
+
+                        searchParams.data = {
+                            gte: dataProximoDomingo,
+                            lte: dataProximoSabado
                         }
                     }
-                    searchParams.data = {
+                    if (values[i] === 'ES') {
+                        const diaAtual = dataAtual.getDate()
+                        const diasateDomingo = 7 - diaAtual
 
+                        const dataProximoDomingo = new Date(dataAtual)
+                        dataProximoDomingo.setDate(dataAtual.getDate() + diasateDomingo)
+
+                        const dataUltimoSabado = new Date(dataProximoDomingo)
+                        dataUltimoSabado.setDate(dataProximoDomingo.getDate() - 6)
+
+                        searchParams.data = {
+                            gte: dataProximoDomingo,
+                            lte: dataUltimoSabado
+                        }
+                    }
+                    if (values[i] === 'PM') {
+                        const mesAtual = dataAtual.getMonth();
+
+                        const primeiroDiaProximoMes = new Date(dataAtual);
+                        primeiroDiaProximoMes.setMonth(mesAtual + 1, 1);
+
+                        const ultimoDiaProximoMes = new Date(dataAtual)
+                        ultimoDiaProximoMes.setMonth(mesAtual + 2, 0)
+
+                        searchParams.data = {
+                            gte: primeiroDiaProximoMes,
+                            lte: ultimoDiaProximoMes
+                        }
+                    }
+                    if (values[i] === 'EM') {
+                        const primeiroDiaMesAtual = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 1)
+
+                        const ultimoDiaMesAtual = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + 1, 0)
+
+                        searchParams.data = {
+                            gte: primeiroDiaMesAtual,
+                            lte: ultimoDiaMesAtual
+                        }
+                    }
+                    break
+                case 'local':
+                    searchParams.Enderecos = {
+                        some: {
+                            cidade: {
+                                equals: values[i]
+                            }
+                        }
+                    }
+                    break
+                case 'acessibilidade':
+                    searchParams.acessibilidadeXevento = {
+                        some: {
+                            id_acessibilidade: {
+                                equals: values[i]
+                            }
+                        }
                     }
             }
+        }
+
+        const eventoService = makeEventosService()
+
+        try {
+            const evento = await eventoService.searchEvento(searchParams)
+
+            return rep.status(200).send({ success: true, data: evento })
+        } catch (error: any) {
+            return rep.status(400).send({ success: false, message: error.message })
         }
     }
 }
