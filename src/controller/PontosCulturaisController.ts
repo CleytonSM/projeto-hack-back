@@ -18,12 +18,12 @@ export class PontosCulturaisController {
             rua: z.string(),
             numero: z.string(),
             bairro: z.string(),
-            cidade: z.string(),
+            id_cidade: z.string(),
             estado: z.string(),
             cep: z.string(),
         })
 
-        const { nome, importancia, referencia, hora_inicio, hora_fim, imagem, rua, numero, bairro, cidade, estado, cep } = pontoCulturalSchema.parse(req.body)
+        const { nome, importancia, referencia, hora_inicio, hora_fim, imagem, rua, numero, bairro, id_cidade, estado, cep } = pontoCulturalSchema.parse(req.body)
         const pontosCulturaisService = makePontosCulturaisService()
         const enderecoService = makeEnderecosService()
         try {
@@ -43,7 +43,7 @@ export class PontosCulturaisController {
 
             const endereco = await enderecoService.create({
                 bairro,
-                cep, cidade, estado, numero, rua, id_ponto_cultural: pontoCultural.id,
+                cep, id_cidade, estado, numero, rua, id_ponto_cultural: pontoCultural.id,
     
             })
             
