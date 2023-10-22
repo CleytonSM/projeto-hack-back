@@ -1,4 +1,4 @@
-import { Enderecos, Prisma } from "@prisma/client";
+import { Cidades, Enderecos, Prisma } from "@prisma/client";
 import { EnderecosRepository } from "../repository/interfaces/enderecos-interface";
 import { AppError } from "../error/AppError";
 import { EnderecosProps } from "../@types/Enderecos";
@@ -21,7 +21,27 @@ export class EnderecosService {
         if (!cidade) {
             throw new AppError('Erro ao criar cidade')
         }
-        
+
+        return cidade
+    }
+
+    async getAllCidades(): Promise<Cidades[] | null> {
+        const cidades = await this.enderecoRepository.getAllCidades()
+
+        if (!cidades) {
+            throw new AppError('Erro ao listar cidades')
+        }
+
+        return cidades
+    }
+
+    async getCidadeById(id: number): Promise<Cidades | null> {
+        const cidade = await this.enderecoRepository.getCidadeById(id)
+
+        if (!cidade) {
+            throw new AppError('Erro ao listar cidade')
+        }
+
         return cidade
     }
 }
