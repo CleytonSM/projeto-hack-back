@@ -41,7 +41,7 @@ export class MarcarPresencaService {
     async updateFavorite(id: string, isFavorite: boolean): Promise<marcar_presenca | null> {
         const marcar_presenca = await this.marcarPresencaInterface.updateFavorite(id, isFavorite)
 
-        if(marcar_presenca) {
+        if(!marcar_presenca) {
             throw new AppError('Erro ao atualizar favorito')
         }
         

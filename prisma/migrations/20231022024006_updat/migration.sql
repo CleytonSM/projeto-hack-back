@@ -123,7 +123,7 @@ CREATE TABLE `marcar_presenca` (
     `id_evento` VARCHAR(191) NOT NULL,
     `id_usuario` VARCHAR(191) NOT NULL,
     `comentario` VARCHAR(191) NULL,
-    `isFavorite` BOOLEAN NOT NULL,
+    `isFavorite` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

@@ -130,14 +130,22 @@ model pontos_acessibilidade {
   acessibilidadeXevento acessibilidadeXevento[]
 }
 
-
 model marcar_presenca {
-  id String @id @default(uuid())
-  id_evento String
+  id         String  @id @default(uuid())
+  id_evento  String
   id_usuario String
   comentario String?
   isFavorite Boolean @default(false)
 
-  Eventos Eventos @relation(fields: [id_evento], references: [id])
+  Eventos  Eventos  @relation(fields: [id_evento], references: [id])
   Usuarios Usuarios @relation(fields: [id_usuario], references: [id])
+}
+
+model Certificados {
+  id               String @id @default(uuid())
+  tipo String
+}
+
+model CertificadosXInstituicoes {
+  
 }
