@@ -23,4 +23,28 @@ export class PrismaEnderecosRepository implements EnderecosRepository {
             return null
         }
     }
+
+    async getAllCidades(): Promise<Cidades[] | null> {
+        try {
+            const cidades = await prisma.cidades.findMany()
+
+            return cidades
+        } catch {
+            return null
+        }
+    }
+
+    async getCidadeById(id: number): Promise<Cidades | null> {
+        try {
+            const cidade = await prisma.cidades.findUnique({
+                where: {
+                    id
+                }
+            })
+
+            return cidade
+        } catch {
+            return null
+        }
+    }
 }
